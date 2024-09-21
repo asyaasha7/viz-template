@@ -1,5 +1,5 @@
 <script>
-	let price = '123';
+	let price = '10';
 	const PRICE_URL = 'http://localhost:5556';
 
 	function getPrice() {}
@@ -7,8 +7,8 @@
 
 <section>
 	<h1>Best Price</h1>
-	<div class="flex">
-		<input type="text" bind:value={price} placeholder="Best Price" style="width: 100%;" disabled />
+	<div class="flex justify-center">
+		<input type="text" bind:value={price} placeholder="Best Price" disabled />
 	</div>
 </section>
 
@@ -18,5 +18,7 @@
 		padding: 5px;
 		background-color: black;
 		border-radius: 4px;
+		width: 50%;
+		height: 50px;
 	}
 </style>

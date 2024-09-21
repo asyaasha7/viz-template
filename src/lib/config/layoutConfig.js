@@ -1,10 +1,10 @@
 export const itemsConfig = [
     {
         coordinates: {
-            x: 0,
+            x: 0.1,
             y: 1,
-            w: 3,
-            h: 3.5
+            w: 2.9,
+            h: 3.7
         },
         com: 'ListInfoKeyValue',
         fixed: true,
@@ -16,7 +16,7 @@ export const itemsConfig = [
             x: 0,
             y: 0,
             w: 2,
-            h: 2
+            h: 1
         },
         com: 'WalletConnectEther',
         fixed: true,
@@ -26,19 +26,19 @@ export const itemsConfig = [
         coordinates: {
             x: 3,
             y: 1,
-            w: 2.6,
+            w: 2.9,
             h: 1.8
         },
         com: 'FormComponent',
-        fixed: false,
+        fixed: true,
         canRemove: true
     },
     {
         coordinates: {
             x: 3,
-            y: 2.9,
-            w: 2.6,
-            h: 1.6
+            y: 3,
+            w: 2.9,
+            h: 1.7
         },
         com: 'BestPrice',
         fixed: true,
@@ -52,7 +52,7 @@ export const itemsConfig = [
             h: 12
         },
         com: 'TableTabs',
-        fixed: false,
+        fixed: true,
         canRemove: true
     }
 ];

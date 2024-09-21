@@ -3,7 +3,9 @@
 	export const prerender = false;
 
 	import '../app.postcss';
-	import { AppShell } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { initializeStores, Toast } from '@skeletonlabs/skeleton';
+	import Logo from '../lib/components/Logo.svelte';
 
 	// Highlight JS
 	import hljs from 'highlight.js/lib/core';
@@ -23,12 +25,22 @@
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
+
+	initializeStores();
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
 
+<Toast />
 <!-- App Shell -->
 <AppShell>
-	<svelte:fragment slot="header"></svelte:fragment>
+	<svelte:fragment slot="header"
+		><AppBar>
+			<div class="flex items-center">
+				<svelte:component this={Logo} />
+				<h2>QUOTATION STATION</h2>
+			</div></AppBar
+		></svelte:fragment
+	>
 	<!-- Page Route Content -->
 	<slot />
 </AppShell>

@@ -10,6 +10,7 @@
 		try {
 			const response = await fetch('http://localhost:5555/api/agent-info');
 			agentInfo = await response.json();
+			console.log(agentInfo);
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		}
@@ -70,11 +71,13 @@
 	}
 
 	.key {
-		color: #9af0ab;
+		color: #f682aa;
 		text-transform: uppercase;
-		font-size: 12px;
+		font-size: 10px;
 	}
 	.value {
 		font-size: 75%;
+		width: 80%;
+		overflow-wrap: break-word;
 	}
 </style>

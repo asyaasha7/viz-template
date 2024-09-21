@@ -1,27 +1,48 @@
 <script>
 	// @ts-nocheck
+	import { getToastStore } from '@skeletonlabs/skeleton';
+
 	import { signerAddress, chainId } from 'ethers-svelte';
 	import { postData } from '../actions';
 	import { PATH } from '../consts';
 
 	let amount;
-	let selectedToken;
+	let selectedTokenAsk;
+	let selectedTokenBid;
+	let time;
+
+	const toastStore = getToastStore();
 
 	async function onSubmit() {
-		console.log(amount);
-		console.log(selectedToken);
+		// Get the current timestamp in milliseconds
+		const now = Date.now();
+
+		// Add 30 seconds (30 * 1000 milliseconds)
+		const timestampIn30Seconds = now + 30 * 1000;
 
 		const payload = {
 			amount_in: amount,
-			token_id: selectedToken,
-			chain_id: $chainId,
-			wallet_address: $signerAddress
+			bid_token_id: selectedTokenAsk,
+			ask_token_id: selectedTokenBid,
+			chain_id: Number($chainId),
+			buyer_wallet_address: String($signerAddress),
+			expiration_time: timestampIn30Seconds
 		};
 		try {
-			const resp = await postData(PATH.RFQ);
-			console.log(resp);
+			const resp = await postData(PATH.RFQ, payload);
+			const toast = {
+				message: 'Submitted new RFQ!',
+				timeout: 5000
+			};
+			toastStore.trigger(toast);
+			amount = null;
 		} catch (e) {
-			console.log(e);
+			const toast = {
+				message: e,
+				timeout: 5000
+			};
+			toastStore.trigger(toast);
+			amount = null;
 		}
 	}
 </script>
@@ -30,16 +51,45 @@
 	<h1>New RFQs</h1>
 	<div class="rfq-form flex gap-2">
 		<label class="label">
-			<input class="input" type="text" placeholder="Amount In" bind:value={amount} />
+			<span> Amount In </span>
+			<input class="input" requred type="text" placeholder="Amount In" bind:value={amount} />
 		</label>
 		<label class="label">
-			<select bind:value={selectedToken} class="select">
+			<span> Ask </span>
+			<select bind:value={selectedTokenAsk} class="select">
 				<option value="WETH">WETH</option>
 				<option value="WBTC">WBTC</option>
 				<option value="DAI">DAI</option>
 				<option value="USDC">USDC</option>
 			</select>
 		</label>
-		<button type="submit" class="btn-sm variant-ghost-surface" on:click={onSubmit}>Submit</button>
+		<label class="label">
+			<span> Bid </span>
+			<select bind:value={selectedTokenBid} class="select">
+				<option value="WETH">WETH</option>
+				<option value="WBTC">WBTC</option>
+				<option value="DAI">DAI</option>
+				<option value="USDC">USDC</option>
+			</select>
+		</label>
+		<div class="flex justify-end flex-col">
+			<button
+				disabled={!$signerAddress}
+				type="submit"
+				class="btn-sm btn variant-ghost-surface"
+				on:click={onSubmit}>Submit</button
+			>
+		</div>
 	</div>
 </section>
+
+<style>
+	span {
+		color: #f682aa;
+		text-transform: uppercase;
+		font-size: 10px;
+	}
+	button {
+		height: 43px;
+	}
+</style>

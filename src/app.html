@@ -3,6 +3,13 @@
 
 <head>
 	<style>
+		h2 {
+			color: white;
+			font-weight: 200 !important;
+			font-size: 20px !important;
+			margin-left: 10px !important;
+		}
+
 		h1 {
 			text-align: center;
 			color: #30e9ff;
@@ -12,6 +19,7 @@
 		}
 
 		section {
+			background-color: #1a1a1a;
 			height: 100%;
 			width: 100%;
 			padding: 20px;
@@ -19,13 +27,17 @@
 			border-radius: 10px;
 			box-shadow: 0 0 16px rgba(0, 255, 65, 0.5);
 		}
+
+		.app-bar {
+			background-color: #1a1a1a !important;
+		}
 	</style>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
 	%sveltekit.head%
 </head>
 
-<body data-sveltekit-preload-data="hover" data-theme="hamlindigo">
+<body data-sveltekit-preload-data="hover" data-theme="rocket">
 	<div style="display: contents" class="h-full overflow-hidden">%sveltekit.body%</div>
 </body>
 

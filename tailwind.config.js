@@ -17,7 +17,7 @@ export default {
 			themes: {
 				preset: [
 					{
-						name: 'hamlindigo',
+						name: 'rocket',
 						enhancements: true,
 					},
 				],
