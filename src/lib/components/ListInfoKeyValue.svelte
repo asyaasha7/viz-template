@@ -3,6 +3,7 @@
 
 	import { onMount } from 'svelte';
 
+	export let name = 'Interface';
 	let agentInfo = {};
 
 	async function fetchData() {
@@ -26,7 +27,7 @@
 
 <main>
 	<div id="root">
-		<h1>Trader Interface</h1>
+		<h1>{name}</h1>
 		<ul class="list">
 			{#each Object.keys(agentInfo) as key}
 				<li>
