@@ -1,4 +1,4 @@
-export const rfqData = [
+export const rfqDataMock = [
     {
         "amount_in": 0,
         "ask_token_id": "DAI",

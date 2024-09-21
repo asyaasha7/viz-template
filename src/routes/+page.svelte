@@ -1,18 +1,23 @@
 <script>
 	// @ts-nocheck
+	import { defaultEvmStores } from 'ethers-svelte';
+
+	import { onMount } from 'svelte';
+	import Grid from 'svelte-grid';
+	import gridHelp from 'svelte-grid/build/helper/index.mjs';
+	import { popup } from '@skeletonlabs/skeleton';
+	import { stringify } from 'postcss';
 
 	import ListInfoKeyValue from '../lib/components/ListInfoKeyValue.svelte';
 	import WalletConnectEther from '../lib/components/WalletConnectEther.svelte';
 
 	// rfq
+	import TableTabs from '../lib/modules/TableTabs.svelte';
 	import TableComponent from '../lib/components/TableComponent.svelte';
 	import FormComponent from '../lib/components/FormComponent.svelte';
 	import BestPrice from '../lib/components/BestPrice.svelte';
 
-	import Grid from 'svelte-grid';
-	import gridHelp from 'svelte-grid/build/helper/index.mjs';
-	import { popup } from '@skeletonlabs/skeleton';
-	import { stringify } from 'postcss';
+	import { itemsConfig } from '../lib/config/layoutConfig';
 
 	const popupFeatured = {
 		event: 'hover',
@@ -26,68 +31,13 @@
 		FormComponent,
 		BestPrice,
 		TableComponent,
-		WalletConnectEther
+		WalletConnectEther,
+		TableTabs
 	};
 
-	// TODO: this data needs to be passed when the front end spinned to make the layout customizable
-	let itemsConfig = [
-		{
-			coordinates: {
-				x: 0,
-				y: 1,
-				w: 3,
-				h: 3.5
-			},
-			com: 'ListInfoKeyValue',
-			fixed: true,
-			canRemove: false,
-			name: 'Trader Interface'
-		},
-		{
-			coordinates: {
-				x: 0,
-				y: 0,
-				w: 2,
-				h: 2
-			},
-			com: 'WalletConnectEther',
-			fixed: true,
-			canRemove: false
-		},
-		{
-			coordinates: {
-				x: 3,
-				y: 1,
-				w: 3,
-				h: 3
-			},
-			com: 'FormComponent',
-			fixed: false,
-			canRemove: true
-		},
-		{
-			coordinates: {
-				x: 0,
-				y: 4.5,
-				w: 10,
-				h: 1
-			},
-			com: 'BestPrice',
-			fixed: true,
-			canRemove: true
-		},
-		{
-			coordinates: {
-				x: 0,
-				y: 5,
-				w: 12,
-				h: 12
-			},
-			com: 'TableComponent',
-			fixed: false,
-			canRemove: true
-		}
-	];
+	onMount(() => {
+		defaultEvmStores.setProvider();
+	});
 
 	let items = itemsConfig.map((item) => {
 		return {
@@ -97,7 +47,8 @@
 			}),
 			id: id(),
 			com: componentsMap[item.com],
-			canRemove: item.canRemove
+			canRemove: item.canRemove,
+			name: item.name
 		};
 	});
 
@@ -123,7 +74,7 @@
 				✕
 			</span>
 		{/if}
-		<svelte:component this={dataItem.com}></svelte:component>
+		<svelte:component this={dataItem.com} name={dataItem.name}></svelte:component>
 	</Grid>
 </div>
 

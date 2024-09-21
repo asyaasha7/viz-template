@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover" data-theme="hamlindigo">
-		<div style="display: contents" class="h-full overflow-hidden">%sveltekit.body%</div>
-	</body>
+
+<head>
+	<style>
+		h1 {
+			text-align: center;
+			color: #30e9ff;
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			margin-bottom: 20px !important;
+		}
+
+		section {
+			height: 100%;
+			width: 100%;
+			padding: 20px;
+			border: 1.8px solid #30e9ff;
+			border-radius: 10px;
+			box-shadow: 0 0 16px rgba(0, 255, 65, 0.5);
+		}
+	</style>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	%sveltekit.head%
+</head>
+
+<body data-sveltekit-preload-data="hover" data-theme="hamlindigo">
+	<div style="display: contents" class="h-full overflow-hidden">%sveltekit.body%</div>
+</body>
+
 </html>

@@ -25,32 +25,25 @@
 	});
 </script>
 
-<main>
-	<div id="root">
-		<h1>{name}</h1>
-		<ul class="list">
-			{#each Object.keys(agentInfo) as key}
-				<li>
-					<span class="key">{processKey(key)}: </span>
-					<span class="flex-auto value">{agentInfo[key] || 'N/A'}</span>
-				</li>
-			{/each}
-		</ul>
-	</div>
-</main>
+<div class="section">
+	<h1>{name}</h1>
+	<ul class="list">
+		{#each Object.keys(agentInfo) as key}
+			<li>
+				<span class="key">{processKey(key)}: </span>
+				<span class="flex-auto value">{agentInfo[key] || 'N/A'}</span>
+			</li>
+		{/each}
+	</ul>
+</div>
 
 <style>
-	main {
-		height: 100%;
-	}
-
-	#root {
+	.section {
 		background-color: #1a1a1a;
 		border: 2px solid #30e9ff;
 		border-radius: 10px;
 		padding: 20px;
 		box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-		max-width: 600px;
 		width: 100%;
 		height: 100%;
 	}

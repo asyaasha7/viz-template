@@ -5,11 +5,12 @@
 	function getPrice() {}
 </script>
 
-<main>
+<section>
+	<h1>Best Price</h1>
 	<div class="flex">
 		<input type="text" bind:value={price} placeholder="Best Price" style="width: 100%;" disabled />
 	</div>
-</main>
+</section>
 
 <style>
 	input {
@@ -17,10 +18,5 @@
 		padding: 5px;
 		background-color: black;
 		border-radius: 4px;
-	}
-	button {
-		padding: 5px 10px;
-		cursor: pointer;
-		height: 35px;
 	}
 </style>
