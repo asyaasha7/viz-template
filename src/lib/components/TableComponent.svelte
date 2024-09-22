@@ -1,9 +1,16 @@
 <script>
+	// @ts-nocheck
+
 	import { signerAddress } from 'ethers-svelte';
-	import { Table, tableMapperValues } from '@skeletonlabs/skeleton';
+	import { Table, tableMapperValues, getToastStore } from '@skeletonlabs/skeleton';
+
+	import { postData } from '../actions';
+	import { PATH } from '../consts';
 
 	export let data;
 	export let allowActions = false;
+
+	const toastStore = getToastStore();
 
 	const tableSimple = {
 		// A list of heading labels.
@@ -20,6 +27,27 @@
 	};
 
 	console.log($signerAddress);
+
+	async function mySelectionHandler(e) {
+		console.log(e);
+		const payload = {};
+		const id = 1;
+		const path = `${PATH.RFQ}/${id}/${PATH.ACCEPT}`;
+		try {
+			const res = await postData(path, payload);
+			const toast = {
+				message: 'Accepted the RFQ!',
+				timeout: 5000
+			};
+			toastStore.trigger(toast);
+		} catch (e) {
+			const toast = {
+				message: e,
+				timeout: 5000
+			};
+			toastStore.trigger(toast);
+		}
+	}
 </script>
 
-<Table source={tableSimple} />
+<Table source={tableSimple} interactive={true} on:selected={mySelectionHandler} />
