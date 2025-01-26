@@ -1,13 +1,20 @@
 <script>
-	let userMsg = '';
-	const AGENT_WS = 'http://localhost:5556';
+	let userMsg = 'Ping!';
+	const AGENT_WS = 'ws://localhost:5556';
 
 	function handlePing() {
 		const ws = new WebSocket(AGENT_WS);
 
 		ws.onopen = () => {
 			ws.send(userMsg);
-			ws.close();
+		};
+
+		ws.onmessage = (event) => {
+			ws.close(); // Close only after receiving a response
+		};
+
+		ws.onerror = (error) => {
+			console.error('WebSocket Error:', error);
 		};
 
 		ws.onclose = () => {
