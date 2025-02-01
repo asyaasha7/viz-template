@@ -58,7 +58,8 @@ export const layoutConfig = {
             fixed: true,
             canRemove: false,
             config: {
-                url: 'https://snapshots.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4'
+                url: ''
+                // url: 'https://snapshots.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4'
             }
         },
         // {
