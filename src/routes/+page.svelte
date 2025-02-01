@@ -82,7 +82,7 @@
 
 	// Initialize default provider and fetch layout on mount
 	onMount(() => {
-		defaultEvmStores.setProvider();
+		// defaultEvmStores.setProvider();
 		fetchLayout();
 	});
 </script>
