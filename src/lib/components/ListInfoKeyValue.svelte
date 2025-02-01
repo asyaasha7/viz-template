@@ -2,13 +2,19 @@
 	// @ts-nocheck
 
 	import { onMount } from 'svelte';
+	import {URLS} from '../consts';
 
-	export let name = 'Interface';
+	export let config;
+
+	// component configs
+	let name = config.name || 'Interface';
+	let url = config.url || URLS.AGENT_INFO;
+
 	let agentInfo = {};
 
 	async function fetchData() {
 		try {
-			const response = await fetch('http://localhost:5555/api/agent-info');
+			const response = await fetch(url);
 			agentInfo = await response.json();
 			console.log(agentInfo);
 		} catch (error) {

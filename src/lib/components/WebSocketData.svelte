@@ -1,9 +1,12 @@
 <script>
 	// @ts-nocheck
-
 	import { onMount } from 'svelte';
 
-	export let AGENT_WS = 'http://localhost:5556';
+	export let config;
+
+	// component configs
+	let url = config.url || 'http://localhost:5556';
+	let name = config.name || 'WebSocket Data Stream';
 
 	let data = [];
 	let filteredData = [];
@@ -11,7 +14,7 @@
 	let filter = '';
 
 	onMount(() => {
-		const ws = new WebSocket(AGENT_WS);
+		const ws = new WebSocket(url);
 
 		ws.onopen = () => {
 			console.log('WebSocket connected');

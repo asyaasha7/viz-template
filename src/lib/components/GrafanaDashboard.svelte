@@ -33,7 +33,6 @@
 		background: rgb(17, 17, 20);
 		color: white;
 		margin-top: 5px;
-		margin-left: 5px;
 		border: 0.8px solid #258dc9b7;
 	}
 </style>

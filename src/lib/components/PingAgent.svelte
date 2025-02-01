@@ -1,9 +1,12 @@
 <script>
 	let userMsg = 'Ping!';
-	const AGENT_WS = 'ws://localhost:5556';
+	 /**
+	 * @type {{ url: string | URL; }}
+	 */
+	  export let config;
 
 	function handlePing() {
-		const ws = new WebSocket(AGENT_WS);
+		const ws = new WebSocket(config.url);
 
 		ws.onopen = () => {
 			ws.send(userMsg);

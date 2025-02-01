@@ -1,58 +1,74 @@
-export const itemsConfig = [
-    {
-        coordinates: {
-            x: 0.1,
-            y: 1,
-            w: 2.9,
-            h: 3.7
+import {URLS} from '../consts';
+
+export const layoutConfig = {
+    data: [
+        {
+            coordinates: {
+                x: 0.1,
+                y: 0.1,
+                w: 2.9,
+                h: 4.3
+            },
+            com: 'ListInfoKeyValue',
+            fixed: true,
+            canRemove: false,
+            config: {
+                name: 'Trader Interface',
+                url: URLS.AGENT_INFO
+            }
         },
-        com: 'ListInfoKeyValue',
-        fixed: true,
-        canRemove: false,
-        name: 'Trader Interface'
-    },
-    {
-        coordinates: {
-            x: 0,
-            y: 0,
-            w: 2,
-            h: 1
+        {
+            coordinates: {
+                x: 0.1,
+                y: 5,
+                w: 5.9,
+                h: 2
+            },
+            com: 'WebSocketData',
+            fixed: true,
+            canRemove: false,
+            config: {
+                url: 'http://localhost:5556'
+            }
         },
-        com: 'WalletConnectEther',
-        fixed: true,
-        canRemove: false
-    },
-    {
-        coordinates: {
-            x: 3,
-            y: 1,
-            w: 2.9,
-            h: 1.8
+        {
+            coordinates: {
+                x: 3,
+                y: 0.1,
+                w: 2.9,
+                h: 0.5
+            },
+            com: 'PingAgent',
+            fixed: true,
+            canRemove: true,
+            config: {
+                url: URLS.WEBSOCKET
+            }
         },
-        com: 'FormComponent',
-        fixed: true,
-        canRemove: true
-    },
-    {
-        coordinates: {
-            x: 3,
-            y: 3,
-            w: 2.9,
-            h: 1.7
+        {
+            coordinates: {
+                x: 3,
+                y: 0.7,
+                w: 2.9,
+                h: 3.2
+            },
+            com: 'GrafanaDashboard',
+            fixed: true,
+            canRemove: false,
+            config: {
+                url: 'https://snapshots.raintank.io/dashboard-solo/snapshot/y7zwi2bZ7FcoTlB93WN7yWO4aMiz3pZb?from=1493369923321&to=1493377123321&panelId=4'
+            }
         },
-        com: 'BestPrice',
-        fixed: true,
-        canRemove: true
-    },
-    {
-        coordinates: {
-            x: 0,
-            y: 5,
-            w: 12,
-            h: 12
-        },
-        com: 'TableTabs',
-        fixed: true,
-        canRemove: true
-    }
-];
+        // {
+        //     coordinates: {
+        //         x: 0,
+        //         y: 5,
+        //         w: 12,
+        //         h: 12
+        //     },
+        //     com: 'TableTabs',
+        //     fixed: true,
+        //     canRemove: true
+        // }
+    ]
+};
