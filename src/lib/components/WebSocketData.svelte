@@ -1,25 +1,33 @@
 <script>
 	// @ts-nocheck
-
 	import { onMount } from 'svelte';
+	import {URLS} from '../consts';
+    import BaseWrapperComponent from './BaseWrapperComponent.svelte';
 
-	export let AGENT_WS = 'http://localhost:5556';
+	export let config;
+
+	// component configs
+	let url = config.url || URLS.WEBSOCKET;
+	let DEFAULT_NAME = 'WebSocket Data Stream';
 
 	let data = [];
 	let filteredData = [];
 	let isExpanded = false;
 	let filter = '';
+	const filterRegex = /^\[[^\]]+\] \[([^\]]+)\]/;
 
 	onMount(() => {
-		const ws = new WebSocket(AGENT_WS);
+		const ws = new WebSocket(url);
 
 		ws.onopen = () => {
 			console.log('WebSocket connected');
 		};
 
 		ws.onmessage = (message) => {
-			const newItem = { text: message.data, expanded: isExpanded };
+			const match = message?.data?.match(filterRegex);
+			const newItem = { text: message.data, expanded: isExpanded, type: match?.[1] };
 			data = [newItem, ...data];
+
 			applyFilter();
 		};
 
@@ -45,7 +53,9 @@
 
 	function applyFilter() {
 		if (filter) {
-			filteredData = data.filter((item) => item.text.includes(filter));
+			filteredData = data.filter((item) => {
+				return item.type === filter;
+			});
 		} else {
 			filteredData = [...data];
 		}
@@ -57,28 +67,26 @@
 	}
 </script>
 
-<main>
-	<div class="data-container">
-		<h2>WebSocket Data Stream</h2>
-		<div class="btn-group variant-filled mb-2">
-			<button class="expand-button" on:click={toggleExpandAll}
-				>{isExpanded ? 'Collapse All' : 'Expand All'}</button
+<BaseWrapperComponent {config} name={DEFAULT_NAME}>
+	<div class="btn-group variant-filled mb-2">
+		<button class="expand-button" on:click={toggleExpandAll}
+		>{isExpanded ? 'Collapse All' : 'Expand All'}</button
+		>
+		<button on:click={() => setFilter('')}>All</button>
+		<button class:selected={filter === '[INFO]'} on:click={() => setFilter('INFO')}>INFO</button
 			>
-			<button on:click={() => setFilter('')}>All</button>
-			<button class:selected={filter === '[INFO]'} on:click={() => setFilter('[INFO]')}>INFO</button
-			>
-			<button class:selected={filter === '[ERROR]'} on:click={() => setFilter('[ERROR]')}
+			<button class:selected={filter === '[ERROR]'} on:click={() => setFilter('ERROR')}
 				>ERROR</button
-			>
-			<button class:selected={filter === '[WARNING]'} on:click={() => setFilter('[WARNING]')}
-				>WARNING</button
-			>
-		</div>
-		{#if filteredData.length > 0}
-			<ul>
-				{#each filteredData as { text, expanded }, index}
-					<li>
-						<div class="item-header" on:click={() => toggleExpand(index)}>
+				>
+				<button class:selected={filter === '[WARNING]'} on:click={() => setFilter('WARNING')}
+					>WARNING</button
+					>
+				</div>
+				{#if filteredData.length > 0}
+			<ul class="overflow-auto h-full">
+				{#each filteredData as { text, expanded, type }, index}
+					<li class={type?.toLowerCase()}>
+						<div class="flex" on:click={() => toggleExpand(index)}>
 							{#if text.length > 150}
 								<span class="arrow">{expanded ? '▼' : '▶'}</span>
 							{/if}
@@ -96,34 +104,18 @@
 		{:else}
 			<p>No data available</p>
 		{/if}
-	</div>
-</main>
+</BaseWrapperComponent>
 
 <style>
-	:global(body) {
-		background-color: #0a0a0a;
-		color: #30e9ff;
-		font-family: 'Courier New', monospace;
+	.info {
+		background: #00ff4017;
 	}
-
-	h2 {
-		text-align: center;
-		color: #30e9ff;
-		text-transform: uppercase;
-		letter-spacing: 2px;
-		margin-bottom: 20px;
+	.error {
+		background: #6a121b72;
 	}
-
-	.data-container {
-		background: linear-gradient(135deg, rgba(10, 10, 10, 0.9) 0%, rgba(20, 20, 20, 0.8) 100%);
-		border: 2px solid #30e9ff;
-		border-radius: 10px;
-		padding: 20px;
-		box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-		max-height: 90vh;
-		overflow-y: auto;
+	.warning {
+		background: #b66f2c23;
 	}
-
 	ul {
 		list-style-type: none;
 		padding: 0;
@@ -138,16 +130,12 @@
 		font-family: 'Courier New', monospace;
 		font-size: 14px;
 		transition: background 0.3s;
-		background: rgba(255, 0, 255, 0.1);
+		background: rgba(84, 81, 84, 0.138);
 		cursor: pointer;
 	}
 
 	li:hover {
 		background: rgba(0, 255, 65, 0.2);
-	}
-
-	.item-header {
-		display: flex;
 	}
 
 	.arrow {
@@ -173,6 +161,7 @@
 		font-size: 18px;
 		font-family: 'Courier New', monospace;
 	}
+
 	.expanded {
 		height: 100%;
 		display: flex;

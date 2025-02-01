@@ -1,13 +1,23 @@
 <script>
-	let userMsg = '';
-	const AGENT_WS = 'http://localhost:5556';
+	let userMsg = 'Ping!';
+	 /**
+	 * @type {{ url: string | URL; }}
+	 */
+	  export let config;
 
 	function handlePing() {
-		const ws = new WebSocket(AGENT_WS);
+		const ws = new WebSocket(config.url);
 
 		ws.onopen = () => {
 			ws.send(userMsg);
-			ws.close();
+		};
+
+		ws.onmessage = (event) => {
+			ws.close(); // Close only after receiving a response
+		};
+
+		ws.onerror = (error) => {
+			console.error('WebSocket Error:', error);
 		};
 
 		ws.onclose = () => {
@@ -17,9 +27,9 @@
 </script>
 
 <main>
-	<div class="flex">
+	<div class="flex mr-1">
 		<input type="text" bind:value={userMsg} placeholder="Ping agent..." style="width: 100%;" />
-		<button type="button" class="btn-sm variant-ghost-surface" on:click={handlePing}>Ping</button>
+		<button type="button" class="btn-sm variant-ghost-surface mr-2" on:click={handlePing}>Ping</button>
 	</div>
 </main>
 

@@ -37,7 +37,7 @@
 		><AppBar>
 			<div class="flex items-center">
 				<svelte:component this={Logo} />
-				<h2>QUOTATION STATION</h2>
+				<h2>VIZ STATION</h2>
 			</div></AppBar
 		></svelte:fragment
 	>

@@ -26,10 +26,7 @@
 		])
 	};
 
-	console.log($signerAddress);
-
 	async function mySelectionHandler(e) {
-		console.log(e);
 		const payload = {};
 		const id = 1;
 		const path = `${PATH.RFQ}/${id}/${PATH.ACCEPT}`;
