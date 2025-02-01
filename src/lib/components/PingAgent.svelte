@@ -27,9 +27,9 @@
 </script>
 
 <main>
-	<div class="flex">
+	<div class="flex mr-1">
 		<input type="text" bind:value={userMsg} placeholder="Ping agent..." style="width: 100%;" />
-		<button type="button" class="btn-sm variant-ghost-surface" on:click={handlePing}>Ping</button>
+		<button type="button" class="btn-sm variant-ghost-surface mr-2" on:click={handlePing}>Ping</button>
 	</div>
 </main>
 

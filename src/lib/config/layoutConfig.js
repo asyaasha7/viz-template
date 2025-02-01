@@ -7,14 +7,15 @@ export const layoutConfig = {
                 x: 0.1,
                 y: 0.1,
                 w: 2.9,
-                h: 4.3
+                h: 4.6
             },
             com: 'ListInfoKeyValue',
             fixed: true,
             canRemove: false,
             config: {
-                name: 'Trader Interface',
-                url: URLS.AGENT_INFO
+                name: 'Agent Interface',
+                url: URLS.AGENT_INFO,
+                refreshInterval: 30000
             }
         },
         {
@@ -22,13 +23,14 @@ export const layoutConfig = {
                 x: 0.1,
                 y: 5,
                 w: 5.9,
-                h: 2
+                h: 6
             },
             com: 'WebSocketData',
             fixed: true,
             canRemove: false,
             config: {
-                url: 'http://localhost:5556'
+                url: URLS.WEBSOCKET,
+                name: 'Agent Logs'
             }
         },
         {
@@ -40,7 +42,7 @@ export const layoutConfig = {
             },
             com: 'PingAgent',
             fixed: true,
-            canRemove: true,
+            canRemove: false,
             config: {
                 url: URLS.WEBSOCKET
             }
@@ -50,7 +52,7 @@ export const layoutConfig = {
                 x: 3,
                 y: 0.7,
                 w: 2.9,
-                h: 3.2
+                h: 4
             },
             com: 'GrafanaDashboard',
             fixed: true,

@@ -1,89 +1,54 @@
 <script>
 	// @ts-nocheck
+    import BaseDataComponent from './BaseDataComponent.svelte';
 
-	import { onMount } from 'svelte';
-	import {URLS} from '../consts';
+	 /** @type {ConfigType} */
+    export let config;
 
-	export let config;
+    let data = {}; // Store received data here
+	let DEFAULT_NAME = "Agent Info";
 
-	// component configs
-	let name = config.name || 'Interface';
-	let url = config.url || URLS.AGENT_INFO;
-
-	let agentInfo = {};
-
-	async function fetchData() {
-		try {
-			const response = await fetch(url);
-			agentInfo = await response.json();
-			console.log(agentInfo);
-		} catch (error) {
-			console.error('Error fetching data:', error);
-		}
-	}
-
-	function processKey(key) {
-		return key?.replace('-', ' ')?.replace('_', ' ');
-	}
-	onMount(() => {
-		fetchData();
-		const interval = setInterval(fetchData, 30000);
-		return () => clearInterval(interval);
-	});
+    function processKey(key) {
+        return key?.replace('-', ' ')?.replace('_', ' ');
+    }
 </script>
 
-<div class="section">
-	<h1>{name}</h1>
-	<ul class="list">
-		{#each Object.keys(agentInfo) as key}
-			<li>
-				<span class="key">{processKey(key)}: </span>
-				<span class="flex-auto value">{agentInfo[key] || 'N/A'}</span>
-			</li>
-		{/each}
-	</ul>
-</div>
+<!-- Listen for the "update" event and update `data` -->
+<BaseDataComponent {config} on:update={(e) => data = e.detail} name={DEFAULT_NAME}>
+    {#if Object.keys(data).length > 0}
+        <ul class="list">
+            {#each Object.entries(data) as [key, value]}
+                <li>
+                    <span class="key">{processKey(key)}: </span>
+                    <span class="flex-auto value">{value || 'N/A'}</span>
+                </li>
+            {/each}
+        </ul>
+    {:else}
+        <p class="text-gray-500 text-center mt-4">No data available</p>
+    {/if}
+</BaseDataComponent>
 
 <style>
-	.section {
-		background-color: #1a1a1a;
-		border: 2px solid #30e9ff;
-		border-radius: 10px;
-		padding: 20px;
-		box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
-		width: 100%;
-		height: 100%;
-	}
-
-	h1 {
-		text-align: center;
-		color: #30e9ff;
-		text-transform: uppercase;
-		letter-spacing: 2px;
-		margin-bottom: 20px;
-	}
-
-	ul {
-		width: 100%;
-		border-collapse: separate;
-		border-spacing: 0 10px;
-		height: auto;
-	}
-
-	li {
-		padding: 10px;
-		text-align: left;
-		border-bottom: 0.5px solid #00ff4178;
-	}
-
-	.key {
-		color: #f682aa;
-		text-transform: uppercase;
-		font-size: 10px;
-	}
-	.value {
-		font-size: 75%;
-		width: 80%;
-		overflow-wrap: break-word;
-	}
+    ul {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+        height: auto;
+    }
+    li {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 0.5px solid #00ff4178;
+    }
+    .key {
+        color: #f682aa;
+        text-transform: uppercase;
+        font-size: 10px;
+    }
+    .value {
+        font-size: 75%;
+        width: 80%;
+        overflow-wrap: break-word;
+    }
 </style>
