@@ -23,33 +23,39 @@ npm run build
 
 Build would output bundle files in public folder
 
-Renders componetns on the dashboard using coordinates and component name.
+Renders components on the dashboard using coordinates configs and mapping 'com' name to a component.
 
-## Layout Configs
+## Layout 
 
-Supports using custom layout configs from http://localhost:5555/api/layout endpoint
-Default fallback layout src/lib/config/layoutConfig.js
+Supports using custom layout configs from http://localhost:5555/api/layout endpoint response <br/>
+Otherwise would use default fallback layout defined in src/lib/config/layoutConfig.js
 
-<b>Params</b>
-
-coordinates { x, y, w, h } - component's x,y positions and  width / height
-fixed: boolean - is component draggable 
-canRemove: boolean - enables removing component from the dashboard
-com: components name - currently supports ListInfoKeyValue, GrafanaDashboard, WebSocketData, PingAgent, WalletConnect
-config: 
-{
-        name: 'component title', // optional
-        url: 'https:your-url-to-fetch-data', // optional, falls back to default value
-        refreshInterval: dataRefreshInterval // optional number
-}
 ------------------------------------
 
-## Available components
+## Configuration Properties
 
-ListInfoKeyValue: fetches data from an endpoint and renders agent info as a key value pair
-GrafanaDashboard: provides input for a custom grafana dashboard and renders a dashboard ( or uses dashboard url from layout configs if provided )
-WebSocketData: renders websocket data using agent endpoint
-PingAgent: input for pinging an agent
+| Property       | Type           | Description |
+|---------------|---------------|-------------|
+| `coordinates` | `{ x, y, w, h }` | Defines the **position** (`x`, `y`) and **size** (`w` = width, `h` = height) of the component. |
+| `fixed`       | `boolean`       | Determines if the component is **draggable** (`true` = fixed, `false` = movable). |
+| `canRemove`   | `boolean`       | Allows the component to be **removed** from the dashboard (`true` = removable, `false` = permanent). |
+| `com`         | `string`        | Defines the **component type** (see supported components below). |
+| `config`      | `object`        | Optional component's configs. name: string - components title, url: string - url to fetch data ( uses default value if not provided ), refreshInterval: number - interval to refetch data |
+
+
+---
+
+## Components Descriptions
+
+| Component Name        | Description | Default URL |
+|----------------------|-------------|-------------|
+| **ListInfoKeyValue** | Fetches data from an endpoint and renders info as a **key-value pair**. | `http://localhost:5555/api/agent-info` |
+| **GrafanaDashboard** | Provides input for a **custom Grafana dashboard** and renders it. Uses the **dashboard URL** from layout configs if provided. | n/a |
+| **WebSocketData**    | Renders **real-time WebSocket data** using the agent's endpoint. | `ws://localhost:5556` |
+| **PingAgent**        | Provides an input field for **pinging an agent**. | `ws://localhost:5556` |
+
+
+
 
 ----------------------------------
 Layout config example 
@@ -58,7 +64,6 @@ w = width
 h = height
 
 ```
-// example
 {
     data: [
         {
